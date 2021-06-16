@@ -1,8 +1,7 @@
 public class Constants {
 
     public static final String TEST_FOLDER_PATH = "C:\\Users\\HRV2\\Desktop\\test";
-    public static final String LIVE_FOLDER_PATH = "C:\\Users\\jermr\\Mark Steinberg, Ph.D Dropbox\\Mark Steinberg" +
-            "\\QIK tests";
+    public static final String LIVE_FOLDER_PATH = "C:\\Users\\jermr\\";
 
     public static final String NAME_PATTERN = "(([A-Za-z]+)\\s*([A-Z][A-Za-z]+))(\\s|-|_|\\d*)[^pdf]";
 
