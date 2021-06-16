@@ -4,46 +4,65 @@ import java.util.Map;
 // Utility class that makes statistical evaluations of patients' test data.
 public class EvaluationUtil {
 
-    // Makes comparisons between qiktest scores; finds subsequent test with greatest difference
-    // in absolute value from baseline; uses evaluate() method on each patient's two tests
+    SignificantSubsequentOmissionScore significantSubsequentOmissionScore;
+    SignificantSubsequentCommissionScore significantSubsequentCommissionScore;
+    SignificantSubsequentVariabilityScore significantSubsequentVariabilityScore;
 
-    public static void evaluateAll() {
+    public EvaluationUtil(SignificantSubsequentOmissionScore omission, SignificantSubsequentCommissionScore commission,
+                          SignificantSubsequentVariabilityScore variability) {
+
+        this.significantSubsequentOmissionScore = omission;
+        this.significantSubsequentCommissionScore = commission;
+        this.significantSubsequentVariabilityScore = variability;
+
+    }
+
+    public void evaluateAll() {
         for (Map.Entry<String, ArrayList<PatientTestData>> entry: DataUtil.data.entrySet()) {
 
-            String patientName = entry.getValue().get(0).getName();
-
-            // Baseline data from first qiktest
-            double baselineOmissionScore = entry.getValue().get(0).getOmissionScore();
-            double baselineCommissionScore = entry.getValue().get(0).getCommissionScore();
-            double baselineVarScore = entry.getValue().get(0).getVarScore();
-
-            // Significant subsequent score is determined by the test with the highest absolute value
-            // difference from baseline score
-            double significantSubsequentOmissionScore = getSignificantSubsequentOmissionScore(entry);
-            double significantSubsequentCommissionScore = getSignificantSubsequentCommissionScore(entry);
-            double significantSubsequentVarScore = getSignificantSubsequentVariabilityScore(entry);
-
-            // Omissions evaluated here
-            double omissionScoreChanges = significantSubsequentOmissionScore - baselineOmissionScore;
-            evaluateOmissions(patientName, baselineOmissionScore, omissionScoreChanges,
-                    significantSubsequentOmissionScore, new PatientStatisticalChanges(patientName,
-                            baselineOmissionScore, significantSubsequentOmissionScore, omissionScoreChanges));
-
-            // Commissions evaluated here
-            double commissionScoreChanges = significantSubsequentCommissionScore -
-                    baselineCommissionScore;
-            evaluateCommissions(patientName, baselineCommissionScore, commissionScoreChanges,
-                    significantSubsequentCommissionScore, new PatientStatisticalChanges(patientName,
-                            baselineCommissionScore,  significantSubsequentCommissionScore,
-                            commissionScoreChanges));
-
-            // Variability evaluated here
-            double varScoreChanges = significantSubsequentVarScore - baselineVarScore;
-            evaluateVariability(patientName, baselineVarScore, varScoreChanges,
-                    significantSubsequentVarScore, new PatientStatisticalChanges(patientName,
-                            baselineVarScore, significantSubsequentVarScore, varScoreChanges));
+            evaluateOne(entry);
 
         }
+    }
+
+    // Makes comparisons between qiktest scores; finds subsequent test with greatest difference
+    // in absolute value from baseline; uses evaluate() method on each patient's two tests
+    public void evaluateOne(Map.Entry<String, ArrayList<PatientTestData>> entry) {
+
+        String patientName = entry.getValue().get(0).getName();
+
+        // Baseline data from first qiktest
+        double baselineOmissionScore = entry.getValue().get(0).getOmissionScore();
+        double baselineCommissionScore = entry.getValue().get(0).getCommissionScore();
+        double baselineVarScore = entry.getValue().get(0).getVarScore();
+
+        // Significant subsequent score is determined by the test with the highest absolute value
+        // difference from baseline score
+        double significantSubsequentOmissionScore = this.significantSubsequentOmissionScore.calculateScore(entry);
+        double significantSubsequentCommissionScore = this.significantSubsequentCommissionScore.calculateScore(entry);
+        double significantSubsequentVarScore = this.significantSubsequentVariabilityScore.calculateScore(entry);
+
+        // Omissions evaluated here
+        double omissionScoreChanges = significantSubsequentOmissionScore - baselineOmissionScore;
+        evaluateOmissions(patientName, baselineOmissionScore, omissionScoreChanges,
+                significantSubsequentOmissionScore, new PatientStatisticalChanges(patientName,
+                        baselineOmissionScore, significantSubsequentOmissionScore, omissionScoreChanges));
+
+        // Commissions evaluated here
+        double commissionScoreChanges = significantSubsequentCommissionScore -
+                baselineCommissionScore;
+        evaluateCommissions(patientName, baselineCommissionScore, commissionScoreChanges,
+                significantSubsequentCommissionScore, new PatientStatisticalChanges(patientName,
+                        baselineCommissionScore,  significantSubsequentCommissionScore,
+                        commissionScoreChanges));
+
+        // Variability evaluated here
+        double varScoreChanges = significantSubsequentVarScore - baselineVarScore;
+        evaluateVariability(patientName, baselineVarScore, varScoreChanges,
+                significantSubsequentVarScore, new PatientStatisticalChanges(patientName,
+                        baselineVarScore, significantSubsequentVarScore, varScoreChanges));
+
+
     }
 
     // Evaluates if a patient's test data satisfies a specific scoring category
@@ -161,7 +180,7 @@ public class EvaluationUtil {
 
     }
 
-    // Finds the subsequent test with the most significant increase or decrease in Omission score
+/*    // Finds the subsequent test with the most significant increase or decrease in Omission score
     private static double getSignificantSubsequentOmissionScore(Map.Entry<String,
             ArrayList<PatientTestData>> entry) {
 
@@ -169,10 +188,9 @@ public class EvaluationUtil {
         if (size == 2) return entry.getValue().get(1).getOmissionScore();
         else return getBestSignificantScore(entry, "Omission");
 
-    }
+    }*/
 
-    // Finds the subsequent test with the most significant increase or decrease in Commission score
-
+/*    // Finds the subsequent test with the most significant increase or decrease in Commission score
     private static double getSignificantSubsequentCommissionScore(Map.Entry<String,
             ArrayList<PatientTestData>> entry) {
 
@@ -180,10 +198,9 @@ public class EvaluationUtil {
         if (size == 2) return entry.getValue().get(1).getCommissionScore();
         else return getBestSignificantScore(entry, "Commission");
 
-    }
+    }*/
 
-    // Finds the subsequent test with the most significant increase or decrease in Variability score
-
+/*    // Finds the subsequent test with the most significant increase or decrease in Variability score
     private static double getSignificantSubsequentVariabilityScore(Map.Entry<String,
             ArrayList<PatientTestData>> entry) {
 
@@ -191,10 +208,10 @@ public class EvaluationUtil {
         if (size == 2) return entry.getValue().get(1).getVarScore();
         else return getBestSignificantScore(entry, "Variability");
 
-    }
+    }*/
 
     // Compares test scores and finds most significant score
-    private static double getBestSignificantScore(Map.Entry<String,
+    public static double getBestSignificantScore(Map.Entry<String,
             ArrayList<PatientTestData>> entry, String category) {
 
         int size = entry.getValue().size();

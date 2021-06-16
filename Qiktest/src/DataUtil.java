@@ -103,7 +103,7 @@ public class DataUtil {
         // Created to store arrays of scores
         ArrayList<PatientTestData> list = new ArrayList<>();
 
-        File folder = new File(Constants.TEST_FOLDER_PATH);
+        File folder = new File(Constants.LIVE_FOLDER_PATH);
         File[] listFiles = folder.listFiles();
         String nameSpace = "@)*$)*@$@*!@%@%)*@!%*)!";
         String nameNoSpace = "@)*$)*@$@*!@%@%)*@!%*)!";
@@ -151,13 +151,16 @@ public class DataUtil {
                 // Adds this qiktest if patient has multiple qiktests on file and this is
                 // the last one
                 else if (flag) {
-                    PatientTestData scores = getScoresArray(listFiles, i, nameSpace);
-                    if (scores == null) continue;
-                    list.add(scores);
-                    Collections.sort(list);
-                    data.put(nameSpace, list);
-                    list = new ArrayList<>();
-                    flag = false;
+                    try {
+                        PatientTestData scores = getScoresArray(listFiles, i, nameSpace);
+                        if (scores == null) continue;
+                        list.add(scores);
+                        Collections.sort(list);
+                        data.put(nameSpace, list);
+                        list = new ArrayList<>();
+                        flag = false;
+                    } catch (IOException ignored) {
+                    }
 
                 }
             }

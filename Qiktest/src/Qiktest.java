@@ -29,7 +29,9 @@ public class Qiktest {
     public static void main(String[] args) throws IOException {
 
         DataUtil.main(null);
-        EvaluationUtil.evaluateAll();
+        var evaluateUtil = new EvaluationUtil(new SignificantSubsequentOmissionScore(),
+                new SignificantSubsequentCommissionScore(), new SignificantSubsequentVariabilityScore());
+        evaluateUtil.evaluateAll();
         DataUtil.printResults();
 
     }
