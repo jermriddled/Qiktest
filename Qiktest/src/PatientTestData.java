@@ -42,33 +42,11 @@ class PatientTestData implements Comparable<PatientTestData> {
         this.name = name;
     }
 
-    public double getPerformance() {
-        return performance;
-    }
-
-    public double getAccuracy() {
-        return accuracy;
-    }
-
     public String getName() { return name; }
-
-    public double getOmissions() { return omissions; }
-
-    public double getOutliers() { return outliers; }
-
-    public double getCommissions() { return commissions; }
-
-    public double getVar() { return var; }
-
-    public double getTime() { return time; }
 
     public double getOmissionScore() { return omissionScore; }
 
-    public double getOutlierScore() { return outlierScore; }
-
     public double getCommissionScore() { return commissionScore; }
-
-    public double getTimeScore() { return timeScore; }
 
     public double getVarScore() { return varScore; }
 

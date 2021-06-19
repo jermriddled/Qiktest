@@ -27,7 +27,7 @@ public class EvaluationUtil {
 
     // Makes comparisons between qiktest scores; finds subsequent test with greatest difference
     // in absolute value from baseline; uses evaluate() method on each patient's two tests
-    public void evaluateOne(Map.Entry<String, ArrayList<PatientTestData>> entry) {
+    private void evaluateOne(Map.Entry<String, ArrayList<PatientTestData>> entry) {
 
         String patientName = entry.getValue().get(0).getName();
 
@@ -68,6 +68,7 @@ public class EvaluationUtil {
     // Evaluates if a patient's test data satisfies a specific scoring category
     private static void evaluateOmissions(String name, double baseline, double changes,
                                           double subsequent, PatientStatisticalChanges stats) {
+
 
         if (baseline >= 115 && changes <= -15) {
             DataUtil.categoryA_Omissions.add(stats);
@@ -179,36 +180,6 @@ public class EvaluationUtil {
         }
 
     }
-
-/*    // Finds the subsequent test with the most significant increase or decrease in Omission score
-    private static double getSignificantSubsequentOmissionScore(Map.Entry<String,
-            ArrayList<PatientTestData>> entry) {
-
-        int size = entry.getValue().size();
-        if (size == 2) return entry.getValue().get(1).getOmissionScore();
-        else return getBestSignificantScore(entry, "Omission");
-
-    }*/
-
-/*    // Finds the subsequent test with the most significant increase or decrease in Commission score
-    private static double getSignificantSubsequentCommissionScore(Map.Entry<String,
-            ArrayList<PatientTestData>> entry) {
-
-        int size = entry.getValue().size();
-        if (size == 2) return entry.getValue().get(1).getCommissionScore();
-        else return getBestSignificantScore(entry, "Commission");
-
-    }*/
-
-/*    // Finds the subsequent test with the most significant increase or decrease in Variability score
-    private static double getSignificantSubsequentVariabilityScore(Map.Entry<String,
-            ArrayList<PatientTestData>> entry) {
-
-        int size = entry.getValue().size();
-        if (size == 2) return entry.getValue().get(1).getVarScore();
-        else return getBestSignificantScore(entry, "Variability");
-
-    }*/
 
     // Compares test scores and finds most significant score
     public static double getBestSignificantScore(Map.Entry<String,

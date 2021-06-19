@@ -28,11 +28,11 @@ public class Qiktest {
 
     public static void main(String[] args) throws IOException {
 
-        DataUtil.main(null);
+        DataUtil.main(new String[]{Constants.LIVE_FOLDER_PATH});
         var evaluateUtil = new EvaluationUtil(new SignificantSubsequentOmissionScore(),
                 new SignificantSubsequentCommissionScore(), new SignificantSubsequentVariabilityScore());
         evaluateUtil.evaluateAll();
-        DataUtil.printResults();
+        PrintUtil.printResults();
 
     }
 }
