@@ -1,2 +1,4 @@
 # Qiktest
-Evaluates qiktest data from records
+This program was designed to evaluate Qiktest data across a large population of patients (roughly 600 patients and 2000 tests) and assess their performance according to various metrics established by the supervising psychologist.  The program parses data from PDFs one patient at a time, and as it does so, marks if the data satisfies the various criteria.  Data that satsfies the criteria are stored for later retrieval when results are compiled and printed. 
+
+Because of the sensitive and confidential nature of patient records, no patient records are stored online or revealed to the public in any manner.  Instead, they are read and evaluated locally.  Additionally, due to the proprietary nature of the test equipment and environment there is no way to fabricate tests for the purposes of uploading them here for demonstration. Thus, this program is purely recreational in nature, although its analysis did reveal interesting information for the supervising psychologist, and its design and implementation afforded me an excellent learning opportunity.
